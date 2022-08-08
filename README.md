@@ -27,12 +27,16 @@ forwards data directly to the Output Handler. The Computation Kernel’s functio
 resulting value. The Output Handler ensures the output of the data in lexicographic order and utilizes
 control logic to select either halo data, or computed results.
 
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/9_Point_Jacobi_Kernel.jpg?raw=true)
+
 The figure shows a 2D grid, 𝐴[𝐻𝐸𝐼𝐺𝐻𝑇][𝑊𝐼𝐷𝑇𝐻], and the stencil window of a 9-Point Jacobi Kernel
 sliding over it. To compute the result of one element, 9 elements of the previous time-step need to be
 available, thus they need to have been stored on-chip and made available for concurrent access. For an
 arbitrary data element 𝐴𝑡 [𝑖][𝑗], that we compute, it becomes evident that the elements 𝐴𝑡−1[𝑖 − 1][𝑗 − 1]
 through 𝐴𝑡−1[𝑖 + 1][𝑗 + 1] need to be stored on-chip. The total of these elements is highlighted in
-highlighted colors (red, blue, and green) in Figure 10.
+highlighted colors (red, blue, and green) in the figure.
+
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Non-Uniform_Memory_Partition_System.jpg?raw=true)
 
 The internal structure of the memory system in our design is provided in Figure 11. Since the focus of
 this thesis is directed at a 𝑛 = 9 points stencil, 𝑛 data reuse registers, that act as independent memory
@@ -41,6 +45,7 @@ elements is necessary and justifies the independence among them. Between those r
 implements data reuse first-inputs, first-outputs (FIFOs) that provide storage for elements not required
 for the current computation but still need to be reused in following ones.
 
+
 On our Xilinx platform, large FIFO, whose capacity is larger than 1024 bits is implemented with BRAM,
 and small FIFO, is implemented with SRL. In figure 8, the data in the registers are the ones in the red
 square frame and the data in the FIFOs are the ones in between, highlighted in blue and green. This
@@ -48,6 +53,9 @@ sequence of registers and FIFOs is addressed as the reuse buffer. As this stenci
 iteration domain, the data in the reuse buffer are propagated in a streaming manner i.e., for each clock
 cycle, the existing data in the memory units (registers, FIFOs) are passed to the successive unit. As for the
 input, the module reads one data element from off-chip memory and stores it in register 𝑅_0.
+
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Size_Table.jpg?raw=true)
+
 As discussed, the size of the utilized memory units is non-uniform and is in derived from the number
 of elements stored in them. Depending on their size and functionality they are also mapped to different
 physical implementations. Considering a 2D array of size 𝐻𝐸𝐼𝐺𝐻𝑇 𝑥 𝑊𝐼𝐷𝑇𝐻 the table bellow provides an
@@ -55,7 +63,7 @@ overview of the size and physical implementation of each memory unit.
 
 The total size of the reuse buffer will be the sum of the distinct memory units and is also equal to the
 iteration distance between the first and the last element needed to calculate the result. This is also evident
-in the optical representation of Figure 10.
+in the optical representation of the figure depicting the grid.
 
 𝑅𝑒𝑢𝑠𝑒_𝐵𝑢𝑓𝑓𝑒𝑟_𝑆𝑖𝑧𝑒 = 2 ∗ 𝑊𝐼𝐷𝑇𝐻 + 3 
 
@@ -74,6 +82,8 @@ is fetched to the Output Handler directly from register 𝑅_4. Ergo, when the i
 blue data elements, the module outputs halo elements. Contrary when the red elements are read at the
 input, the output is that of calculated data fetched from the Computation Kernel. The above process
 maintains the lexicographic order in the outputted results.
+
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/TCAD_Output_Delay.jpg?raw=true)
 
 It should be taken into consideration that our architecture has an intrinsic latency (𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦) to
 perform the internal propagation of data and calculate each result. Although, the pipelined nature of our
