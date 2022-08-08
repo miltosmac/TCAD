@@ -1,10 +1,27 @@
 # TCAD
 ## An Optimal Microarchitecture for Stencil Computation Acceleration Based on Nonuniform Partitioning of Data Reuse Buffers
 
+### Table of contents
+* [Technologies](#Technologies)
+* [Setup](#setup)
+* [Introduction](#Introduction)
+* [Single Time-Step](#Single-Time-Step)
+* [Multiple Time-Stepsp](#Multiple-Time-Steps)
+* [Detailed Explanation](#Detailed-Explanation)
+* [Setup](#setup)
+
 ### Technologies
 Project is created with:
 * C/C+
 * Vitis HLS 2021.2
+
+### Setup
+* Run Vitis (or Vivado) HLS adding the source & header files from the corresponding folder.
+* The jacobi9d.cpp file should be used as the top function for the implementation of a single time-step.
+* The Temporal.cpp file should be used as the top function for the implementation of multiple time-steps.
+* Utilize the provided Test-Bench frome the corresponding folder.
+* In the header file the defined size of the grid can be modified.
+* The
 
 ### Introduction 
 
@@ -19,7 +36,7 @@ input from off-chip memory, and one new result outputted by the out ports.
 
 ![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Single_Time_Step_Kernel_Accelerator.jpg?raw=true)
 
-### Detailed Exxplanation
+### Detailed Explanation
 
 #### Single Time-Step
 
