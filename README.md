@@ -103,7 +103,7 @@ stage to complete the calculation, thus significantly increasing the overall lat
 the design proposed cascades the STSA stages in a manner that exploits task level parallelism. So that the
 design improves on throughput and latency.
 
-![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Cascaded_STSA.jpg?raw=true)
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Caascaded_STSA.jpg?raw=true)
 
 Channels are added between stages that are implemented as FIFOs to store the data that each stage
 produces. Therefore, each task is executed at its own pace and the throughput is only limited by the
@@ -113,7 +113,7 @@ STSA_1 has started its operation before STSA_0 has completed its own. Hence, the
 STSA_1 work in parallel at the cost of 𝑛 − 1 additional FIFO registers, where 𝑛 is the number of stages
 cascaded together
 
-![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Cascaded_STSA_Latency.jpg?raw=true)
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Cascade_STSA_Latency.jpg?raw=true)
 
 The figure above provides a better understanding of the parallelism achieved. Given that each stage provides
 outputs after 𝑊𝐼𝐷𝑇𝐻 + 1 + 𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦 where 𝑊𝐼𝐷𝑇𝐻 + 1 is the delay introduced by the nature of
