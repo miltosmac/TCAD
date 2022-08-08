@@ -1,7 +1,7 @@
 # TCAD
 ## An Optimal Microarchitecture for Stencil Computation Acceleration Based on Nonuniform Partitioning of Data Reuse Buffers
 
-## Technologies
+### Technologies
 Project is created with:
 * C/C+
 * Vitis HLS 2021.2
