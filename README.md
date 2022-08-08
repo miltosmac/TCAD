@@ -21,6 +21,8 @@ input from off-chip memory, and one new result outputted by the out ports.
 
 ### Detailed Exxplanation
 
+#### Single Time-Step
+
 As depicted, there is one input and one output for every clock cycle. The non-uniformly partitioned memory system handles this input
 and either feeds the 9 data elements required to the computation kernel, or, in the case of halo elements,
 forwards data directly to the Output Handler. The Computation Kernel’s function is the calculation of the
@@ -91,6 +93,35 @@ design makes sure that each of the iterations happen in parallel, and the throug
 to one. The above combined with the fact that it takes 𝑊𝐼𝐷𝑇𝐻 ∗ 𝐻𝐸𝐼𝐺𝐻𝑇 to input the whole grid, lead
 to the conclusion that the total latency of the design is described by the following equation.
 𝐿𝑎𝑡𝑒𝑛𝑐𝑦 = 𝑊𝐼𝐷𝑇𝐻 ∗ 𝐻𝐸𝐼𝐺𝐻𝑇 + (𝑊𝐼𝐷𝑇𝐻 + 1) + 𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦 = (𝐻𝐸𝐼𝐺𝐻𝑇 + 1) ∗ 𝑊𝐼𝐷𝑇𝐻 + 1 + 𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦
+
+#### Multiple Time-Steps
+
+The work described above calculates the Jacobi 9-Point by traversing the grid once, that is, for one
+time-step. To create a design that iterates time domain iterations, the described architecture should be
+replicated and chained. A naive approach of cascading the stages of the STSA would require for every
+stage to complete the calculation, thus significantly increasing the overall latency of the design. Instead,
+the design proposed cascades the STSA stages in a manner that exploits task level parallelism. So that the
+design improves on throughput and latency.
+
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Cascaded_STSA.jpg?raw=true)
+
+Channels are added between stages that are implemented as FIFOs to store the data that each stage
+produces. Therefore, each task is executed at its own pace and the throughput is only limited by the
+availability of the input and output buffers. The design is now completely data driven. As shown in Figure
+13, STSA_1 will receive input data after the first output of STSA_0 is written on the intermediate buffer.
+STSA_1 has started its operation before STSA_0 has completed its own. Hence, the two stages STSA_0 and
+STSA_1 work in parallel at the cost of 𝑛 − 1 additional FIFO registers, where 𝑛 is the number of stages
+cascaded together
+
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/Cascaded_STSA_Latency.jpg?raw=true)
+
+The figure above provides a better understanding of the parallelism achieved. Given that each stage provides
+outputs after 𝑊𝐼𝐷𝑇𝐻 + 1 + 𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦 where 𝑊𝐼𝐷𝑇𝐻 + 1 is the delay introduced by the nature of
+the stencil and 𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦 is the intrinsic latency of each stage. We can deduce that the succeeding
+stage will be able to receive an input after 𝑊𝐼𝐷𝑇𝐻 + 2 + 𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦, the extra 1 cycle is the result of
+the latency introduced from the added buffer. Thus, the total latency of the design with 𝑛 cascaded stages
+is described by the equation below:
+𝐿𝑎𝑡𝑒𝑛𝑐𝑦 = 𝐻𝐸𝐼𝐺𝐻𝑇 ∗ 𝑊𝐼𝐷𝑇𝐻 + 𝑛 ∗ ( 𝑊𝐼𝐷𝑇𝐻 + 2 + 𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦 ) = 𝑊𝐼𝐷𝑇𝐻 ∗ (𝐻𝐸𝐼𝐺𝐻𝑇 + 𝑛) + 𝑛 ∗ (2 + 𝑆𝑇𝑆𝐴𝐿𝑎𝑡𝑒𝑛𝑐𝑦)
 
 ### References
 <a id="1">[1]</a> 
