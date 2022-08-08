@@ -17,7 +17,7 @@ realizes the minimum usage of On-Chip Memory (OCM) and the minimum off-chip data
 Moreover, it can be characterized by its pipelined architecture, i.e., for every clock cycle, there is one new
 input from off-chip memory, and one new result outputted by the out ports.
 
-![TCAD Accelerator](./TCAD_Illustrations/Single Time-Step Kernel Accelerator.png)
+![alt text](https://github.com/miltosmac/TCAD/TCAD_Illustrations/Single Time-Step Kernel Accelerator.png?raw=true)
 
 ### Detailed Exxplanation
 
