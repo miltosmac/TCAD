@@ -19,9 +19,9 @@ Project is created with:
 * Run Vitis (or Vivado) HLS adding the source & header files from the corresponding folder.
 * The jacobi9d.cpp file should be used as the top function for the implementation of a single time-step.
 * The Temporal.cpp file should be used as the top function for the implementation of multiple time-steps.
-* Utilize the provided Test-Bench frome the corresponding folder.
+* Utilize the provided Test-Bench from the corresponding folder.
 * In the header file the defined size of the grid can be modified.
-* The
+* The number of Time-Steps can be modified in the Temporal.cpp file, by adding succesive calls to the jacobi9d funncion and declaring the intermediate variables.
 
 ### Introduction 
 
