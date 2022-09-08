@@ -8,7 +8,6 @@
 * [Single Time-Step](#Single-Time-Step)
 * [Multiple Time-Stepsp](#Multiple-Time-Steps)
 * [Detailed Explanation](#Detailed-Explanation)
-* [Setup](#setup)
 
 ### Technologies
 Project is created with:
