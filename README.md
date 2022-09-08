@@ -2,6 +2,7 @@
 ## An Optimal Microarchitecture for Stencil Computation Acceleration Based on Nonuniform Partitioning of Data Reuse Buffers
 
 ### Table of contents
+* [About](#About)
 * [Technologies](#Technologies)
 * [Setup](#setup)
 * [Introduction](#Introduction)
@@ -9,6 +10,9 @@
 * [Multiple Time-Steps](#Multiple-Time-Steps)
 * [Detailed Explanation](#Detailed-Explanation)
 * [References](#References)
+
+### About
+This project introduces an architecture that optimizes Stencil Kernel Calculations and is offloaded to FPGAs with the use of High Level Synthesis tools (HLS).  
 
 ### Technologies
 Project is created with:
