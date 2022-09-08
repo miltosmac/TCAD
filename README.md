@@ -6,7 +6,7 @@
 * [Setup](#setup)
 * [Introduction](#Introduction)
 * [Single Time-Step](#Single-Time-Step)
-* [Multiple Time-Stepsp](#Multiple-Time-Steps)
+* [Multiple Time-Steps](#Multiple-Time-Steps)
 * [Detailed Explanation](#Detailed-Explanation)
 
 ### Technologies
